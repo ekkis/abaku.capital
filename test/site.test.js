@@ -16,16 +16,23 @@ test('retained brand assets exist', () => {
 test('mission, focus, portfolio, and etymology are present', () => {
   assert.match(html, /boutique investment firm/i);
   assert.match(html, /Vow ecosystem/i);
-  for (const company of ['PriceEdge', 'VowCorp', 'Alera', 'NokNok', 'VowLabs']) {
-    assert.match(html, new RegExp(`>${company}<`));
+  for (const company of ['PriceEdge', 'Alera', 'NokNok', 'VowLabs', 'Enigmatic Smile']) {
+    assert.match(html, new RegExp(`<img[^>]+alt="${company}"`), `missing portfolio logo: ${company}`);
   }
+  assert.match(html, /class="portfolio-vowcorp" aria-label="VowCorp"/);
   assert.match(html, /originates with the Akkadian language/);
   assert.match(html, /Global capital<br>redefined/);
   assert.match(html, /Many touchpoints/);
 });
 
+test('portfolio logos are local image assets', () => {
+  const logos = [...html.matchAll(/src="(assets\/portfolio-[^"]+)"/g)].map(match => match[1]);
+  assert.equal(logos.length, 6);
+  for (const logo of logos) assert.ok(fs.statSync(path.join(root, logo)).size > 100, `${logo} should contain image data`);
+});
+
 test('portfolio companies open their external sites safely', () => {
-  for (const company of ['priceedge.me', 'vowcorp.net', 'alera.us.org', 'noknok.id', 'vowlabs.dev']) {
+  for (const company of ['priceedge.me', 'vowcorp.net', 'alera.us.org', 'noknok.id', 'vowlabs.dev', 'enigmaticsmile.com']) {
     assert.match(html, new RegExp(`href="https://${company.replaceAll('.', '\\.')}" target="_blank" rel="noopener noreferrer"`));
   }
 });
