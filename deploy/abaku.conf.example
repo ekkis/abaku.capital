@@ -5,4 +5,4 @@
 # ABAKU_USER=www-data
 # ABAKU_GROUP=www-data
 # ABAKU_NODE=/usr/bin/node
-# ABAKU_LOG=/var/log/abaku.log
+# ABAKU_LOG=/var/log/nginx/abaku.log

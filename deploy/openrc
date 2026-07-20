@@ -3,15 +3,16 @@
 name="Abaku Capital website"
 description="Static website server for Abaku Capital"
 
-# Resolve this script through /etc/init.d/abaku when it is installed as a symlink.
-service_file="$(readlink -f "$0")"
+# OpenRC may set $0 to its internal runner, so resolve the installed service
+# symlink explicitly instead.
+service_file="$(readlink -f "/etc/init.d/$RC_SVCNAME")"
 default_app_dir="$(dirname "$(dirname "$service_file")")"
 
 : "${ABAKU_DIR:=$default_app_dir}"
 : "${ABAKU_USER:=www-data}"
 : "${ABAKU_GROUP:=www-data}"
 : "${ABAKU_NODE:=/usr/bin/node}"
-: "${ABAKU_LOG:=/var/log/abaku.log}"
+: "${ABAKU_LOG:=/var/log/nginx/abaku.log}"
 
 directory="$ABAKU_DIR"
 command="$ABAKU_NODE"

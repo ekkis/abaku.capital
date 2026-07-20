@@ -19,10 +19,11 @@ PORT=4174
 ## Alpine Linux / OpenRC
 
 Link the included service file and enable it at boot. The service runs as
-`www-data:www-data` by default:
+`www-data:www-data` by default and writes its output to
+`/var/log/nginx/abaku.log`:
 
 ```sh
-ln -s "$(pwd)/deploy/abaku" /etc/init.d/abaku
+ln -s "$(pwd)/deploy/openrc" /etc/init.d/abaku
 rc-update add abaku default
 rc-service abaku start
 ```
