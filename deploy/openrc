@@ -12,7 +12,10 @@ default_app_dir="$(dirname "$(dirname "$service_file")")"
 : "${ABAKU_USER:=www-data}"
 : "${ABAKU_GROUP:=www-data}"
 : "${ABAKU_NODE:=/usr/bin/node}"
-: "${ABAKU_LOG:=/var/log/nginx/abaku.log}"
+: "${ABAKU_LOG:=/var/log/abaku.capital.log}"
+: "${ABAKU_PORT:=4173}"
+
+export PORT="$ABAKU_PORT"
 
 directory="$ABAKU_DIR"
 command="$ABAKU_NODE"
@@ -32,6 +35,18 @@ depend() {
 }
 
 start_pre() {
+  case "$ABAKU_PORT" in
+    ''|*[!0-9]*)
+      eerror "ABAKU_PORT must be a number between 1 and 65535"
+      return 1
+      ;;
+  esac
+
+  if [ "$ABAKU_PORT" -lt 1 ] || [ "$ABAKU_PORT" -gt 65535 ]; then
+    eerror "ABAKU_PORT must be a number between 1 and 65535"
+    return 1
+  fi
+
   checkpath --file --mode 0644 --owner "$command_user" "$ABAKU_LOG"
 
   if [ ! -r "$ABAKU_DIR/server.js" ]; then

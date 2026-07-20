@@ -29,6 +29,8 @@ rc-service abaku start
 ```
 
 The service follows the symlink to locate this repository and loads the
-project's `.env` through `server.js`. If the repository, Node executable,
-service account, or log location differs, copy `deploy/abaku.conf.example` to
-`/etc/conf.d/abaku` and uncomment the relevant overrides.
+project's `.env` through `server.js`. To select its listening port, copy
+`deploy/abaku.conf.example` to `/etc/conf.d/abaku` and set `ABAKU_PORT`. The
+port must also match the port in nginx's `proxy_pass` directive. The same
+configuration file can override the repository, Node executable, service
+account, and log location.
