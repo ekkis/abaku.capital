@@ -8,8 +8,8 @@ service_file="$(readlink -f "$0")"
 default_app_dir="$(dirname "$(dirname "$service_file")")"
 
 : "${ABAKU_DIR:=$default_app_dir}"
-: "${ABAKU_USER:=abaku}"
-: "${ABAKU_GROUP:=abaku}"
+: "${ABAKU_USER:=www-data}"
+: "${ABAKU_GROUP:=www-data}"
 : "${ABAKU_NODE:=/usr/bin/node}"
 : "${ABAKU_LOG:=/var/log/abaku.log}"
 

@@ -2,7 +2,7 @@
 # The defaults below are shown for reference.
 
 # ABAKU_DIR=/opt/abaku
-# ABAKU_USER=abaku
-# ABAKU_GROUP=abaku
+# ABAKU_USER=www-data
+# ABAKU_GROUP=www-data
 # ABAKU_NODE=/usr/bin/node
 # ABAKU_LOG=/var/log/abaku.log

@@ -18,11 +18,10 @@ PORT=4174
 
 ## Alpine Linux / OpenRC
 
-Create an unprivileged service account, link the included service file, and
-enable it at boot:
+Link the included service file and enable it at boot. The service runs as
+`www-data:www-data` by default:
 
 ```sh
-adduser -S -D -H -s /sbin/nologin abaku
 ln -s "$(pwd)/deploy/abaku" /etc/init.d/abaku
 rc-update add abaku default
 rc-service abaku start
