@@ -21,7 +21,7 @@ test('mission, focus, portfolio, and etymology are present', () => {
   }
   assert.match(html, /class="portfolio-vowcorp" aria-label="VowCorp"/);
   assert.match(html, /originates with the Akkadian language/);
-  assert.match(html, /Global capital<br>redefined/);
+  assert.match(html, /GLOBAL CAPITAL<br>REDEFINED/);
   assert.match(html, /Many touchpoints/);
 });
 
