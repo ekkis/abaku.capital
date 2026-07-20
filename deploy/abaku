@@ -1,0 +1,45 @@
+#!/sbin/openrc-run
+
+name="Abaku Capital website"
+description="Static website server for Abaku Capital"
+
+# Resolve this script through /etc/init.d/abaku when it is installed as a symlink.
+service_file="$(readlink -f "$0")"
+default_app_dir="$(dirname "$(dirname "$service_file")")"
+
+: "${ABAKU_DIR:=$default_app_dir}"
+: "${ABAKU_USER:=abaku}"
+: "${ABAKU_GROUP:=abaku}"
+: "${ABAKU_NODE:=/usr/bin/node}"
+: "${ABAKU_LOG:=/var/log/abaku.log}"
+
+directory="$ABAKU_DIR"
+command="$ABAKU_NODE"
+command_args="server.js"
+command_user="$ABAKU_USER:$ABAKU_GROUP"
+
+supervisor="supervise-daemon"
+pidfile="/run/${RC_SVCNAME}.pid"
+output_log="$ABAKU_LOG"
+error_log="$ABAKU_LOG"
+respawn_delay=5
+respawn_max=0
+
+depend() {
+  need net
+  after firewall
+}
+
+start_pre() {
+  checkpath --file --mode 0644 --owner "$command_user" "$ABAKU_LOG"
+
+  if [ ! -r "$ABAKU_DIR/server.js" ]; then
+    eerror "Cannot read $ABAKU_DIR/server.js"
+    return 1
+  fi
+
+  if [ ! -x "$ABAKU_NODE" ]; then
+    eerror "Node executable not found at $ABAKU_NODE"
+    return 1
+  fi
+}
