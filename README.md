@@ -34,3 +34,7 @@ project's `.env` through `server.js`. To select its listening port, copy
 port must also match the port in nginx's `proxy_pass` directive. The same
 configuration file can override the repository, Node executable, service
 account, and log location.
+
+Nginx does not automatically read OpenRC variables, so update the
+`proxy_pass` port in `deploy/nginx.conf` (and the installed nginx config) to
+the same value as `ABAKU_PORT`.
